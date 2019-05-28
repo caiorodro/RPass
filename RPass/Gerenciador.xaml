@@ -1,0 +1,474 @@
+﻿<Page
+    x:Class="RPass.Gerenciador"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RPass"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="LightSlateGray">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Button Name="BTN_VOLTAR" Background="Transparent" BorderBrush="Transparent" Grid.Row="0"
+                        HorizontalAlignment="Left" Visibility="Visible" Click="BTN_VOLTAR_Click">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Image Source="imagens/back.png" Grid.Column="0"></Image>
+                <TextBlock Foreground="WhiteSmoke" Text="  Voltar" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
+            </Grid>
+        </Button>
+
+        <Pivot x:Name="PV1" Foreground="WhiteSmoke" SelectionChanged="PV1_SelectionChanged" Grid.Row="1">
+            <PivotItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0">
+                        <Grid HorizontalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Name="BTN_NOVO" Background="WhiteSmoke" BorderBrush="WhiteSmoke" Grid.Column="0" Foreground="SteelBlue"
+                                Click="BTN_NOVO_Click">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Source="imagens/add.png" Grid.Column="0" Height="19"></Image>
+                                    <TextBlock Foreground="Navy" Text="  Nova senha" VerticalAlignment="Center" Grid.Column="1"></TextBlock>
+                                </Grid>
+                            </Button>
+
+                            <TextBlock Foreground="Transparent" Text="             -" Grid.Column="1"></TextBlock>
+
+                            <Grid Grid.Column="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="Exibir senhas?" Foreground="WhiteSmoke"
+                                       Grid.Row="0"></TextBlock>
+                                <ToggleSwitch x:Name="TGL_SENHAS" IsOn="False" Grid.Row="1"
+                                OnContent="Sim" OffContent="Não" Toggled="TGL_SENHAS_Toggled" Foreground="WhiteSmoke" />
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+
+                    <ListBox Name="LBX_senhas" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                             BorderBrush="WhiteSmoke" Background="Transparent" HorizontalAlignment="Center"
+                             FontSize="24" Width="365">
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding TIPO}" Foreground="WhiteSmoke" TextWrapping="Wrap" FontSize="17"></TextBlock>
+                                            <TextBlock Text="{Binding DESCRICAO_SENHA}" Foreground="WhiteSmoke" TextWrapping="Wrap" FontSize="17"></TextBlock>
+
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock Text="Senha:" Foreground="WhiteSmoke" Grid.Column="0"></TextBlock>
+                                                <TextBlock Text="  -" Foreground="Transparent" Grid.Column="1"></TextBlock>
+
+                                                <TextBlock Text="{Binding SENHA_MASCARA}" Foreground="WhiteSmoke" TextWrapping="Wrap" Width="440"
+                                                       FontSize="17" Grid.Column="2"></TextBlock>
+                                            </Grid>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Button Tag="{Binding ID_SENHA}" Background="WhiteSmoke" BorderBrush="WhiteSmoke" 
+                                                    Click="Button_Click" Width="75">
+
+                                                <Image Source="/imagens/ball_point_pen-26.png" Height="20"
+                                                            HorizontalAlignment="Center"></Image>
+                                            </Button>
+
+                                            <TextBlock Text=" - " Foreground="Transparent" FontSize="8"></TextBlock>
+
+                                            <Button Tag="{Binding ID_SENHA}" Background="WhiteSmoke" BorderBrush="WhiteSmoke" 
+                                                    Click="Button_Click_1" Width="75">
+
+                                                <Image Source="/imagens/delete-26.png" Grid.Row="0" Height="20"
+                                                            HorizontalAlignment="Center"></Image>
+                                            </Button>
+
+                                            <TextBlock Text=" - " Foreground="Transparent" FontSize="8"></TextBlock>
+
+                                            <Button Tag="{Binding ID_SENHA}" Background="WhiteSmoke" BorderBrush="WhiteSmoke" 
+                                                    Click="Button_Click_5" Width="75">
+
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Image Source="/imagens/attach-26.png" Grid.Column="0" Height="20"
+                                                            HorizontalAlignment="Center"></Image>
+
+                                                    <TextBlock Text="  -" Foreground="Transparent" FontSize="8" Grid.Column="1"></TextBlock>
+
+                                                    <TextBlock Text="{Binding ANEXOS}" Foreground="Navy" FontSize="14" VerticalAlignment="Center" 
+                                                               HorizontalAlignment="Center" Grid.Column="2"
+                                                               FontWeight="Bold"></TextBlock>
+                                                </Grid>
+                                            </Button>
+                                        </StackPanel>
+
+                                        <TextBlock Text="   -" Foreground="Transparent" Grid.Column="2"></TextBlock>
+                                    </Grid>
+
+                                    <Line Stroke="WhiteSmoke" X1="0" Y1="1" X2="300" Y2="1" 
+                                              StrokeThickness=".75" Grid.Row="1" />
+
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Line Stroke="WhiteSmoke" X1="0" Y1="1" X2="300" Y2="1" 
+                                              StrokeThickness=".75" HorizontalAlignment="Center" Grid.Row="2" />
+
+                    <TextBlock Text=" - " Foreground="Transparent" FontSize="8" Grid.Row="3"></TextBlock>
+
+                    <Grid Grid.Row="4" Width="330" HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBox x:Name="TXT_FILTRO" Foreground="DarkSlateGray" Width="238"
+                                 Grid.Column="0" Height="35" HorizontalAlignment="Left" KeyUp="TXT_FILTRO_KeyUp"></TextBox>
+
+                        <TextBlock Text="-" Foreground="Transparent" Grid.Column="1"></TextBlock>
+
+                        <Button Name="BTN_FILTRO" Background="WhiteSmoke" BorderBrush="WhiteSmoke" Grid.Column="2" Foreground="SteelBlue"
+                                Click="BTN_FILTRO_Click" Height="35">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="imagens/search-26.png" Grid.Column="0" Height="19"></Image>
+                                <TextBlock Foreground="Navy" Text="  Filtrar" VerticalAlignment="Center" Grid.Column="1"></TextBlock>
+                            </Grid>
+                        </Button>
+
+                    </Grid>
+
+                    <Grid Background="White" Grid.Row="5">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="Total de senhas na lista: " Grid.Column="0" FontSize="16" Foreground="Navy" Grid.Row="0" HorizontalAlignment="Right"></TextBlock>
+                        <TextBlock Text="    -" Grid.Row="0" Grid.Column="1" Foreground="Transparent"></TextBlock>
+                        <TextBlock x:Name="LBL_TOTAL_SENHAS" Text="10" Grid.Column="2" FontSize="16" Foreground="Navy" Grid.Row="0" HorizontalAlignment="Right"></TextBlock>
+                    </Grid>
+                </Grid>
+            </PivotItem>
+
+            <PivotItem>
+                <StackPanel>
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Source="imagens\icones\image 300x300.png" Height="75" HorizontalAlignment="Left"
+                           Grid.Column="0"></Image>
+
+                        <TextBlock x:Name="LBL_FORM_SENHA" Foreground="WhiteSmoke" FontSize="20" Text=" Nova senha" Grid.Column="1"
+                                   VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                    </Grid>
+
+                    <TextBlock x:Name="LBL_ID_SENHA" Text="0" Visibility="Collapsed"></TextBlock>
+
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Foreground="WhiteSmoke" FontSize="18" Text=" Tipo:"></TextBlock>
+
+                        <ComboBox x:Name="CB_TIPO" Width="330" DisplayMemberPath="TIPO" SelectionChanged="CB_TIPO_SelectionChanged"></ComboBox>
+
+                        <Button Name="BTN_NOVO_TIPO1" Background="WhiteSmoke" BorderBrush="WhiteSmoke" Foreground="SteelBlue"
+                                Click="BTN_NOVO_TIPO1_Click" Width="330">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="imagens/add.png" Grid.Column="0" Height="19"></Image>
+                                <TextBlock Foreground="Navy" Text="  Novo tipo" FontSize="16" VerticalAlignment="Center" Grid.Column="1"></TextBlock>
+                            </Grid>
+                        </Button>
+                        <TextBlock Foreground="Transparent" Text=" - "></TextBlock>
+
+                        <TextBlock Foreground="WhiteSmoke" FontSize="18" Text=" Referências da senha:"></TextBlock>
+
+                        <TextBox Name="TXT_CREDENCIAIS" Foreground="DarkSlateGray" Width="330" 
+                             HorizontalAlignment="Left"
+                             GotFocus="TXT_credenciais_GotFocus" TextWrapping="Wrap" AcceptsReturn="True"
+                             Height="120" DoubleTapped="TXT_credenciais_DoubleTapped" InputScope="Text" >
+                        </TextBox>
+
+                        <TextBlock Foreground="Transparent" Text=" - "></TextBlock>
+
+                        <TextBlock Foreground="WhiteSmoke" FontSize="18" Text=" Senha:"></TextBlock>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <Button Name="BTN_SUGERIR_SENHA" Background="WhiteSmoke" BorderBrush="WhiteSmoke" Foreground="SteelBlue"
+                                Click="BTN_SUGERIR_SENHA_Click" Width="195" Grid.Column="0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Image Source="imagens/key-26.png" Grid.Column="0" Height="19"></Image>
+                                    <TextBlock Foreground="Navy" Text="  Sugerir senha" FontSize="16" VerticalAlignment="Center" Grid.Column="1"></TextBlock>
+                                </Grid>
+                            </Button>
+
+                            <CheckBox x:Name="CB_EXIBIR_SENHA" Content="Exibir senha" Foreground="WhiteSmoke"
+                                      Grid.Column="1" HorizontalAlignment="Center" IsChecked="False"
+                                      Checked="CB_EXIBIR_SENHA_Checked" Unchecked="CB_EXIBIR_SENHA_Checked"></CheckBox>
+                        </Grid>
+
+                        <TextBox x:Name="TXT_SENHA1" Foreground="DarkSlateGray" Width="330"
+                                 HorizontalAlignment="Left" Visibility="Collapsed" IsReadOnly="True"></TextBox>
+
+                        <PasswordBox Name="TXT_SENHA" Foreground="DarkSlateGray" Width="330"
+                                 HorizontalAlignment="Left" KeyUp="TXT_SENHA_KeyUp"></PasswordBox>
+
+                        <TextBlock Foreground="Transparent" Text=" - "></TextBlock>
+
+                        <Button Name="BTN_SALVAR" Background="WhiteSmoke" BorderBrush="WhiteSmoke" Foreground="SteelBlue"
+                            Click="BTN_SALVAR_emails_Click" Width="330">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="imagens/checkmark-26.png" Grid.Column="0" Height="19"></Image>
+                                <TextBlock Foreground="Navy" Text="  Salvar" FontSize="16" VerticalAlignment="Center" Grid.Column="1"></TextBlock>
+                            </Grid>
+                        </Button>
+                        
+                        <TextBlock Text="-" Foreground="Transparent" FontSize="8"></TextBlock>
+                        
+                        <TextBlock x:Name="LBL_CADASTRO" Text="" Foreground="Yellow" FontSize="16"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </PivotItem>
+
+            <PivotItem>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" HorizontalAlignment="Center">
+
+                        <Button x:Name="BTN_NOVO_TIPO" Background="WhiteSmoke"
+                                        BorderBrush="Transparent" Click="BTN_NOVO_TIPO_Click">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                    <RowDefinition Height="Auto"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Image Source="imagens/add.png" Height="26" Grid.Row="0"></Image>
+                                <TextBlock Foreground="Navy" Text="Novo tipo" Grid.Row="1" FontSize="13"></TextBlock>
+                            </Grid>
+                        </Button>
+
+                        <TextBlock x:Name="hTIPO" Visibility="Collapsed" Text="0"></TextBlock>
+
+                        <Line Stroke="Black" X1="0" Y1="1" X2="400" Y2="1" StrokeThickness=".75" Grid.Row="1" />
+
+                        <TextBlock Text="  -  " FontSize="8" Foreground="Transparent"></TextBlock>
+
+                        <TextBlock Text="Grupo / tipo da senha:" Foreground="WhiteSmoke"></TextBlock>
+                        <TextBox x:Name="TXT_TIPO" Width="335" InputScope="Text" HorizontalAlignment="Left"></TextBox>
+
+                        <TextBlock Text="  -  " FontSize="8" Foreground="Transparent"></TextBlock>
+
+                        <Button Name="BTN_SALVAR_TIPO" Background="WhiteSmoke" BorderBrush="WhiteSmoke"
+                                                Width="335" Height="40" HorizontalAlignment="Left" Click="BTN_SALVAR_TIPO_Click">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="imagens/checkmark-26.png" Grid.Column="0" Width="13"></Image>
+                                <TextBlock Foreground="DarkSlateBlue" Text="  Salvar" Grid.Column="1" VerticalAlignment="Center"></TextBlock>
+                            </Grid>
+                        </Button>
+
+                        <TextBlock Text="  -  " FontSize="8" Foreground="Transparent"></TextBlock>
+                    </StackPanel>
+
+                    <ListBox x:Name="LBX_TIPO" Grid.Row="1" Grid.Column="2"  ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                                    Background="Transparent" Width="365" HorizontalAlignment="Center">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="{Binding TIPO}" Grid.Column="0" FontSize="16" Foreground="WhiteSmoke" 
+                                                           Grid.Row="0"></TextBlock>
+
+                                    <Line Stroke="White" X1="0" Y1="1" X2="310" Y2="1" StrokeThickness=".75" Grid.Row="1"
+                                          Grid.Column="0"/>
+
+                                    <TextBlock Text="   -" FontSize="8" Foreground="Transparent" Grid.Row="0" Grid.Column="1"></TextBlock>
+
+                                    <Button Tag="{Binding ID_TIPO}" Background="WhiteSmoke" BorderBrush="WhiteSmoke"
+                                            HorizontalAlignment="Center" Grid.Column="2" Click="Button_Click_3"
+                                            Grid.RowSpan="2" Grid.Row="1" VerticalAlignment="Center">
+
+                                        <Image Source="/imagens/ball_point_pen-26.png" Height="20"
+                                                            HorizontalAlignment="Center"></Image>
+                                    </Button>
+
+                                    <TextBlock Text="  -" FontSize="8" Grid.Column="2" Grid.Row="0" Foreground="Transparent"></TextBlock>
+                                </Grid>
+
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </PivotItem>
+
+            <PivotItem>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Anexos da senha" Foreground="LightYellow" FontSize="20"
+                               HorizontalAlignment="Center" Grid.Row="0"></TextBlock>
+                    
+                    <Button x:Name="BTN_PIC" Content="Selecionar arquivo(s)" Click="BTN_PIC_Click" Width="330"
+                            Background="WhiteSmoke" HorizontalAlignment="Center" Grid.Row="1"></Button>
+
+                    <TextBlock x:Name="LBL_ANEXOS" Text="Selecione um ou mais arquivos do seu device para anexar na senha escolhida" Foreground="LightYellow" 
+                        FontSize="20" Grid.Row="2" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
+
+                    <TextBlock x:Name="LBL_ID_SENHA_ANEXO" Visibility="Collapsed"></TextBlock>
+
+                    <ListBox Name="LBX_ANEXO" ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                             BorderBrush="WhiteSmoke" Background="Transparent" Grid.Row="3"
+                             FontSize="24" HorizontalAlignment="Center" Width="365">
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                    </Grid.RowDefinitions>
+
+                                    <Button Tag="{Binding ID_ANEXO}" Click="Button_Click_6" Background="Transparent">
+                                        <Image Source="{Binding IMAGE}" Grid.Column="0" Grid.Row="0" Width="50"></Image>
+                                    </Button>
+
+                                    <TextBlock Text="  -" Foreground="Transparent" Grid.Row="0" Grid.Column="1"></TextBlock>
+
+                                    <TextBlock Text="{Binding ANEXO}" Foreground="WhiteSmoke" TextWrapping="Wrap" FontSize="16"
+                                                  Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Width="220"></TextBlock>
+
+                                    <TextBlock Text="  -" Foreground="Transparent" Grid.Row="0"  Grid.Column="3"></TextBlock>
+
+                                    <Button Tag="{Binding ID_ANEXO}" Background="WhiteSmoke" BorderBrush="WhiteSmoke" 
+                                                    Click="Button_Click_4" Width="45" Grid.Column="4" Grid.Row="0">
+                                        <Image Source="/imagens/delete-26.png" Height="20"
+                                                            HorizontalAlignment="Center"></Image>
+                                    </Button>
+
+                                    <Line Stroke="WhiteSmoke" X1="0" Y1="1" X2="280" Y2="1" 
+                                              StrokeThickness=".75" Grid.Row="1" Grid.ColumnSpan="3" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+</Page>
